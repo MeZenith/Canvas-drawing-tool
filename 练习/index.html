@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #canvas{
+            background-color: lightgray;
+            border-radius: 10px;
+            box-shadow: 2px 2px 2px 3px #a5a1a1;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="500" height="500"></canvas>
+<div class="buttom-btn">
+    <button type="button" id="reset">重置</button>
+    <button type="button" id="save">保存</button>
+</div>
+<script>
+    //鼠标按下
+    let isMouseDown = false;
+    //旧的位置
+    let oldPosition = {x: 0, y: 0};
+    //获取id
+    const canvas = document.getElementById('canvas');
+    const draw = canvas.getContext('2d');
+    const resetDraw = document.getElementById('reset');
+    const save = document.getElementById('save');
+
+    //封装绘画函数
+    function drawLine(ox,oy,nx,ny){
+        draw.beginPath();
+        draw.lineTo(ox,oy);
+        draw.lineTo(nx,ny);
+        draw.stroke();
+    }
+
+    //橡皮擦
+    function eraser(sx=0, sy=0,w = 1,h = 1){
+        draw.clearRect(sx,sy,w,h);
+    }
+
+    //保存
+    function  saveImg(u){
+        const url =  canvas.toDataURL(u);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "画";
+        a.target = '_blank';
+        a.click();
+    }
+
+    //获取鼠标按下事件
+    canvas.addEventListener("mousedown",function (e){
+        let x =e.offsetX;
+        let y =e.offsetY;
+        oldPosition = {x: x, y: y};
+        isMouseDown = true;
+    })
+
+    //获取鼠标的移动
+    canvas.addEventListener("mousemove",function (e){
+
+        let x =e.offsetX;
+        let y =e.offsetY;
+        let newPosition = {x: x, y: y};
+        if(isMouseDown){
+            drawLine(oldPosition.x,oldPosition.y,newPosition.x,newPosition.y);
+            oldPosition = newPosition;
+        }
+    })
+
+    //鼠标松开事件
+    canvas.addEventListener("mouseup",function (e){
+        isMouseDown = false;
+    })
+
+    // 重置
+    resetDraw.addEventListener('click',function (e){
+        eraser(0,0,canvas.width,canvas.height);
+    })
+
+    //保存
+    save.addEventListener('click',function (e){
+        saveImg("image/jpg");
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绘图工具</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!--选择颜色区域-->
+<div class="color-card">
+    <div id="black" class="black"></div>
+    <div id="red" class="red"></div>
+    <div id="yellow" class="yellow"></div>
+    <div id="green" class="green"></div>
+    <div id="blue" class="blue"></div>
+</div>
+<!--画布-->
+<!-- 画板容器 -->
+<div class="canvas-wrapper" style="position: relative; display: inline-block;">
+    <canvas id="canvas" class="canvas" width="300" height="300"></canvas>
+    <!-- 拖拽手柄 -->
+    <div id="resize-handle"></div>
+</div>
+
+<!--导出-->
+<div class="save-btn">
+    <button id="saveJpg" class="jpg">Save to jpg</button>
+    <button id="savePng" class="png">Save to png</button>
+</div>
+<script src="js/resize.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
